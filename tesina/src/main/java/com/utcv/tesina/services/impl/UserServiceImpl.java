@@ -57,6 +57,8 @@ public class UserServiceImpl implements IUserService {
             Optional<UserEntity> existingUserOpt = userRepository.findById(id);
             if (existingUserOpt.isPresent()){
                 UserEntity existingUser = existingUserOpt.get();
+                existingUser.setNombre_usuario(newUser.getNombre_usuario());
+                existingUser.setApellido(newUser.getApellido());
                 existingUser.setEmail(newUser.getEmail());
                 existingUser.setPassword(newUser.getPassword());
 

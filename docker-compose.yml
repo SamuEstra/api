@@ -1,0 +1,41 @@
+
+
+services:
+  esbao:
+    build:
+      context: ./tesina
+      dockerfile: Dockerfile
+    container_name: tesina-app
+    ports:
+      - "8080:8080"
+    environment:
+      - DB_URL=jdbc:postgresql://dpg-cqqikhl6l47c73avbmu0-a.oregon-postgres.render.com/tesina_db
+      - DB_USER_NAME=samuel
+      - DB_PASSWORD=ktFFsgJ80YTkStf8dZ0ZwXFxDRP6Bseh
+      - DB_JWT_PRIVATE=jwtKeys/private.key.pem
+      - DB_JWT_PUBLIC=jwtKeys/public.key.pem
+    restart: always
+    depends_on:
+      - db
+    
+
+  db:
+    image: postgres:latest
+    container_name: tesina-db
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=bd_tesina
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=qwerty
+    restart: always
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "postgres", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  db-data:

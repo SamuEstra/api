@@ -33,3 +33,21 @@ dependencies {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+springBoot {
+	mainClass = 'com.utcv.tesina.TesinaApplication'
+}
+
+bootJar {
+	archiveBaseName = 'tesina_app'
+	archiveVersion = '0.0.1-SNAPSHOT'
+}
+
+// Configuración adicional para asegurar que el JAR incluya el atributo Main-Class en el manifiesto
+jar {
+	manifest {
+		attributes(
+				'Main-Class': 'com.utcv.tesina.TesinaApplication'
+		)
+	}
+}
